@@ -1,0 +1,5 @@
+[17-Mar-2022 08:29:12 UTC] PHP Parse error:  syntax error, unexpected 'Bush' (T_STRING), expecting ')' in /home/bq7bisu3nvgv/public_html/OscarsBallotPredictions/application/config/config.php on line 555
+[17-Mar-2022 08:30:00 UTC] PHP Parse error:  syntax error, unexpected 'Bush' (T_STRING), expecting ')' in /home/bq7bisu3nvgv/public_html/OscarsBallotPredictions/application/config/config.php on line 555
+[17-Mar-2022 08:30:02 UTC] PHP Parse error:  syntax error, unexpected 'Bush' (T_STRING), expecting ')' in /home/bq7bisu3nvgv/public_html/OscarsBallotPredictions/application/config/config.php on line 555
+[17-Mar-2022 08:31:56 UTC] PHP Parse error:  syntax error, unexpected 'Fraser' (T_STRING), expecting ')' in /home/bq7bisu3nvgv/public_html/OscarsBallotPredictions/application/config/config.php on line 562
+[17-Mar-2022 08:39:04 UTC] PHP Parse error:  syntax error, unexpected '”KING' (T_STRING), expecting ')' in /home/bq7bisu3nvgv/public_html/OscarsBallotPredictions/application/config/config.php on line 637

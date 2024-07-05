@@ -1,0 +1,141 @@
+
+<?php require_once APPPATH.'/views/_header.php';?>
+
+<!-- admin_header -->
+<?php require_once APPPATH.'/views/admin/inc/admin_header.php'; ?>
+<input type="hidden" id="user-page-admin" value="1">
+<!-- content -->
+<div class="ballot-content" style="padding-top:25px; padding-bottom:20px">
+	<div style="width:100%;text-align:center;background: #fafafa;margin-top: 5px;padding-top: 5px;padding-bottom: 5px;">
+		<button type="button" data-toggle="modal" data-target="#add-edit-user-modal" class="btn btn-success waves-effect w-md waves-light m-b-5"  id="add-user-btn">ADD USER</button>
+		<button type="button" id="delete-users-btn" class="btn btn-danger waves-effect w-md waves-light m-b-5">Delete</button>
+	</div>
+	<div class="panel"><div class="panel-body">
+	<div class="table-rep-plugin">
+	<div class="table-responsive b-0">
+		<form method="get" accept-charset="utf-8" action="<?php echo base_url()?>admin/user/index">
+			<div class="row">
+				<div class="col-sm-3">
+					<div class="dataTables_length">
+						<label>
+							Show 
+							<select name="limit" class="form-control input-sm">
+								<?php foreach($page_sizes as $key => $value):?>
+									<?php if ($key == $this->input->get('limit')):?>
+										<option value="<?php echo $key?>" selected><?php echo $value;?></option>
+									<?php else: ?>
+										<option value="<?php echo $key?>"><?php echo $value;?></option>
+									<?php endif;?>
+								<?php endforeach;?>
+							</select>
+							entries
+						</label>
+					</div>
+				</div>
+				<div class="col-sm-9">
+					<div class="dataTables_filter">
+						<label>
+							<select name="group_id" id="group_id" class="form-control input-sm" >
+								<option value="">Select Group</option>
+								<?php if (!empty($groups)):?>
+									<?php foreach($groups as $group):?>
+										<option value="<?php echo $group->id?>"<?php echo $this->input->get('group_id') == $group->id?' selected': ''?>><?php echo $group->name;?></option>
+									<?php endforeach;?>
+								<?php endif;?>
+							</select>
+						</label>
+						<label>
+							<select name="role_id" class="form-control input-sm" >
+								<option value="">Select Role</option>
+								<?php if (!empty($roles)):?>
+									<?php foreach($roles as $role):?>
+										<option value="<?php echo $role->id?>"<?php echo $this->input->get('role_id') == $role->id?' selected': ''?>><?php echo $role->name;?></option>
+									<?php endforeach;?>
+								<?php endif;?>
+							</select>
+						</label>
+						<label>
+							<select name="status" class="form-control input-sm" >
+								<option value="">Select Status</option>
+								<option value="1" <?php echo $this->input->get('status') == 1?'selected': ''?>>Active</option>
+								<option value="2" <?php echo $this->input->get('status') == 2?'selected': ''?>>Inactive</option>
+							</select>						
+						</label>
+						<label><input type="search" name="search" class="form-control input-sm" value="<?php echo $this->input->get('search');?>"  placeholder="Search..." aria-controls="datatable-editable"></label>
+						<button style="margin-left: 60px;" class="btn btn-success ">Search</button>
+					</div>
+				</div>
+
+			</div>
+		</form>
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th></th>
+					<th>Name</th>
+					<th data-priority="6">Email</th>
+					<th data-priority="6">Role</th>
+					<th data-priority="6">Score</th>
+                    <th data-priority="6">Number of Correct Categories</th>
+                    <th data-priority="6">Most Oscars?</th>
+    				<th data-priority="6">How many?</th>
+					<th data-priority="6">Groups</th>
+					<th data-priority="6">Status</th>
+					<th data-priority="6">Created</th>
+					<th data-priority="6">Updated</th>
+					<th data-priority="3">Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+			<?php if (!empty($list)) { foreach ($list as $item) { ?>
+				<tr class="gradeX">
+					<td><input type="checkbox" class="checkbox" value="<?php echo $item['id'];?>"></td>
+					<td><?php echo $item['name']; ?></td>
+					<td><?php echo $item['email']; ?></td>
+					<td><?php echo $item['role_name']; ?></td>
+					<td><?php echo $item['score']; ?></td>
+                    <td><?php echo $item['correct_categories']; ?></td>
+                    <td><?php echo $item['most_oscar']; ?></td>
+    				<td><?php echo $item['how_many']; ?></td>
+					<td>
+						<?php if (!empty($item['groups'])):?>
+							<?php foreach($item['groups'] as $group):?>
+								<span class="badge badge-secondary"><?php echo $group->name;?></span>
+							<?php endforeach;?>
+						<?php endif; ?>
+					</td>
+					<td><?php echo $item['status'] == 1?'Active' : 'Inactive'; ?></td>
+					<td><?php echo $item['created']; ?></td>
+					<td><?php echo $item['updated']; ?></td>
+					<td class="actions">
+						<a href="#" class="hidden on-editing cancel-row"><i class="fa fa-times"></i></a>					
+						<a href="#" class="on-default remove-row" style="color: red;" onclick="onDeleteUser('<?php echo $item['id']; ?>')"><i class="fa fa-trash-o"></i></a>
+						<a href="#" class="on-default edit-row" style="color: white;" data-toggle="modal" data-target="#add-edit-user-modal" onclick="onEditUser('<?php echo $item['id']; ?>')"><i class="fa fa-edit"></i></a>
+					</td>
+				</tr>	
+			<?php }} ?>			
+			</tbody>
+		</table>
+		<div class="row mt-2">
+			<div class="col-sm-6">
+				<div class="dataTables_info" role="status" aria-live="polite"><?php echo $pagination_string;?></div>
+			</div>
+			<div class="col-sm-6">
+				<div class="dataTables_paginate paging_simple_numbers" id="datatable-editable_paginate">
+					<?php echo $pagination;?>
+				</div>
+			</div>
+		</div>
+	</div>
+	</div>
+	</div></div>
+</div>
+
+<div id="add-edit-user-modal" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+	<div class="modal-dialog">
+		<div class="modal-content" id="add-edit-user-content">
+		</div>
+	</div>
+</div>
+<!-- footer -->
+<?php require_once APPPATH.'/views/_footer.php';?>
